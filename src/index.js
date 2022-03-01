@@ -8,7 +8,7 @@ import combineReducers from './components/reducers';
 
 // currying concept used here
 // function logger (obj,next,action) = logger (obj)(next)(action)
-const logger = function ({ dispatch, getState }) {
+// const logger = function ({ dispatch, getState }) {
 //   return function (next) {
 //     return function (action) {
 //       // middleware code
@@ -25,7 +25,16 @@ const logger = ({ dispatch, getState }) => (next) => (action) => {
   next(action);
 };
 
-const store = createStore(combineReducers, applyMiddleware(logger));
+const thunk = ({ dispatch }) => (next) => (action) => {
+  // middleware code
+  if (typeof action === 'function') {
+    action(dispatch);
+    return;
+  }
+  next(action);
+};
+
+const store = createStore(combineReducers, applyMiddleware(logger,thunk));
 console.log("Store", store);
 // console.log('Before State', store.getState());
 
