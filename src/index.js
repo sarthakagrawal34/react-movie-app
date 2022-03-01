@@ -4,10 +4,10 @@ import { createStore } from 'redux';
 
 import './index.css';
 import App from './components/App';
-import rootReducer from './components/reducers';
+import combineReducers from './components/reducers';
 
 
-const store = createStore(rootReducer);
+const store = createStore(combineReducers);
 console.log("Store", store);
 // console.log('Before State', store.getState());
 

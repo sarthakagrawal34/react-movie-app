@@ -1,5 +1,5 @@
 import { ADD_MOVIES, ADD_TO_FAVOURITES, REMOVE_FROM_FAVOURITES, SET_SHOW_FAVOURITES } from "../actions";
-
+import { combineReducers } from "redux";
 // Movie Reducer
 const initialMoviesState = {
     list: [],
@@ -67,9 +67,14 @@ const initialRootState = {
 
 };
 
-export default function rootReducer(state = initialRootState, action) {
-    return {
-        movies: moviesReducer(state.movies, action),
-        search: searchReducer(state.search, action),
-    };
-};
+// export default function rootReducer(state = initialRootState, action) {
+//     return {
+//         movies: moviesReducer(state.movies, action),
+//         search: searchReducer(state.search, action),
+//     };
+// };
+
+export default combineReducers({
+    movies: moviesReducer,
+    search: searchReducer,
+});
