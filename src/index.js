@@ -9,15 +9,21 @@ import combineReducers from './components/reducers';
 // currying concept used here
 // function logger (obj,next,action) = logger (obj)(next)(action)
 const logger = function ({ dispatch, getState }) {
-  return function (next) {
-    return function (action) {
-      // middleware code
-      console.log("ACTION_TYPE", action.type);
-      next(action);
-    };
-  };
+//   return function (next) {
+//     return function (action) {
+//       // middleware code
+//       console.log("ACTION_TYPE", action.type);
+//       next(action);
+//     };
+//   };
+// };
+  
+// 2nd way of using currying 
+const logger = ({ dispatch, getState }) => (next) => (action) => {
+  // middleware code
+  console.log('ACTION_TYPE', action.type);
+  next(action);
 };
-
 
 const store = createStore(combineReducers, applyMiddleware(logger));
 console.log("Store", store);
