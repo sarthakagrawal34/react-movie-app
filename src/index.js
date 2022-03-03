@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createContext } from 'react';
 import ReactDOM from 'react-dom';
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
@@ -41,6 +41,9 @@ const store = createStore(combineReducers, applyMiddleware(logger,thunk));
 console.log("Store", store);
 // console.log('Before State', store.getState());
 
+// Create store context so that store can be global, don't need to pass as props
+export const StoreContext = createContext();
+
 // store.dispatch({
 //   type: "ADD_MOVIES",
 //   movies: [{name:"Superman"}]
@@ -48,9 +51,20 @@ console.log("Store", store);
 
 // console.log('After State', store.getState());
 
+export class Provider extends React.Component{
+  render() {
+    const { store } = this.props;
+    return <StoreContext.Provider value={store}>
+      {this.props.children}
+    </StoreContext.Provider>
+  };
+};
+
 ReactDOM.render(
   <React.StrictMode>
-    <App store={ store }/> 
+    <Provider store={store}>
+      <App />
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
