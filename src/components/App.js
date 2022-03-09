@@ -40,7 +40,7 @@ class App extends React.Component {
 
     return (
       <div className="App">
-        <Navbar search={search}/>
+        <Navbar />
         <div className="main">
           <div className="tabs">
             <div
